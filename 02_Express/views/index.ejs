@@ -1,42 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Student CRUD</title>
 </head>
 <body>
 
 <h1>Student CRUD App</h1>
 
-<!-- Insert Form -->
-<form action="/insertData" method="post">
-  <input type="text" name="id" placeholder="Enter ID" required>
-  <input type="text" name="name" placeholder="Enter Name" required>
-  <button type="submit" style="padding: 5px; background: #000; color: white; border-radius: 8px;">Add Student</button>
+<form action="<%= editValue && editValue.id ? '/updateData' : '/insertData' %>" method="POST">
+
+  <input type="number" name="id" placeholder="Enter ID"
+         value="<%= editValue && editValue.id ? editValue.id : '' %>"
+         <%= editValue && editValue.id ? 'readonly' : '' %> required>
+
+  <input type="text" name="name" placeholder="Enter Name"
+         value="<%= editValue && editValue.name ? editValue.name : '' %>" required>
+
+  <button type="submit" style="padding:6px 15px;background:black;color:white;border-radius:8px;">
+    <%= editValue && editValue.id ? 'Update Student' : 'Add Student' %>
+  </button>
+
 </form>
 
-<br><br>
+<br>
 
-<!-- Student Table -->
 <table border="1" cellpadding="10">
-  <tr style="background-color: lightgray;">
-    <th>ID</th>
-    <th>Name</th>
-    <th>Action</th>
-  </tr>
-  
+<tr>
+  <th>ID</th><th>Name</th><th>Action</th>
+</tr>
 
-  
-  <% student.map(stu => { %>
-    <tr>
-      <td><%= stu.id %></td>
-      <td><%= stu.name %></td>
-      <td>
-        <a href="/delete?id=<%= stu.id %>" style="text-decoration: none; color: red;">Delete</a> |
-        <a href="/edit?id=<%= stu.id %>" style="text-decoration: none; color: blue;">Edit</a>
-      </td>
-    </tr>
-  <% }) %>
+<% student.forEach(stu => { %>
+<tr>
+  <td><%= stu.id %></td>
+  <td><%= stu.name %></td>
+  <td>
+    <a href="/edit?id=<%= stu.id %>">Edit</a> |
+    <a href="/delete?id=<%= stu.id %>">Delete</a>
+  </td>
+</tr>
+<% }) %>
 
 </table>
 
