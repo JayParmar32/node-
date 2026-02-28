@@ -1,31 +1,32 @@
-const express = require("express")
-const db = require("./config/db")
-const userModel = require("./model/usermodel")
-const app = express()
+const express = require("express");
+const db = require("./config/db");   
+const userModel = require("./model/booktitle");
 
-app.use(express.json())
+const app = express();
+app.use(express.json());
+
+// ADD
 app.post("/insertData", async (req, res) => {
-  const data = await userModel.create(req.body)
-  return res.send(data)
+  const data = await userModel.create(req.body);
+  res.json(data);
 });
 
+// GET
 app.get("/", async (req, res) => {
-  const data = await userModel.find({})
-  return res.send(data)
+  const data = await userModel.find();
+  res.json(data);
 });
 
+// DELETE
 app.delete("/:id", async (req, res) => {
-  const id = req.params.id
-  const data = await userModel.findByIdAndDelete(id)
-  return res.send("Sucess")
+  await userModel.findByIdAndDelete(req.params.id);
+  res.send("Deleted");
 });
 
+// UPDATE
 app.patch("/:id", async (req, res) => {
-  const id = req.params.id
-  const data = await userModel.findByIdAndUpdate(id, req.body)
-  return res.send("Sucess")
+  await userModel.findByIdAndUpdate(req.params.id, req.body);
+  res.send("Updated");
 });
 
-app.listen(7890, () => {
-  console.log("server listen")
-});
+app.listen(7000, () => console.log("Server running at http://localhost:7000"));

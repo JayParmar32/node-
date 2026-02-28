@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="/insert" method="post" enctype="multipart/form-data">
+        <label for="text">Enter Username : </label>
+        <input type="text" placeholder="enter name" id="username" name="username">
+        <br>
+        <label for="text">Enter Password : </label>
+        <input type="text" placeholder="password" id="password" name="password">
+        <br>
+        <label for="file">Select Image : </label>
+        <input type="file" name="image" id="name">
+        <br>
+        <input type="submit">
+    </form>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Image</th>
+            <th>Action</th>
+        </tr>
+
+        <% data.forEach(el=> { %>
+            <tr>
+                <td>
+                    <%= el.username %>
+                </td>
+                <td>
+                    <%= el.password %>
+                </td>
+                <td><img src="<%= el.image %>" width="80"></td>
+                <td>
+                    <a href="/delete/<%= el._id %>" onclick="return confirm('Delete this user?')">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            <% }) %>
+    </table>
+
+</body>
+
+</html>
