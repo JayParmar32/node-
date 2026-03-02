@@ -11,7 +11,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 let users = [];
-let sessions = {}; // ✅ FIXED
+let sessions = {};
 
 function authMiddleware(req, res, next) {
   const sessionId = req.cookies.sessionId;
@@ -74,14 +74,16 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/dashboard", authMiddleware, (req, res) => {
-  res.render("dashboard", { user: req.user });
+  res.render("dashboard", { username: req.user.username });
 });
 
-app.get("/logout", (req, res) => {
+app.get("/logout", authMiddleware, (req, res) => {
   const sessionId = req.cookies.sessionId;
-  delete sessions[sessionId];
-  res.clearCookie("sessionId");
-  res.redirect("/index");
+  if (sessionId) {
+    delete sessions[sessionId];
+    res.clearCookie("sessionId");
+  }
+  res.redirect("/login");
 });
 
 app.listen(3000, () => {
