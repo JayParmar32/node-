@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<h2>Welcome <%= user %></h2>
+
+<a href="/blogs/new">Create Blog</a> |
+<a href="/logout">Logout</a>
+
+<hr>
+
+<% if (blogs.length === 0) { %>
+<p>No blogs yet.</p>
+<% } %>
+
+<% blogs.forEach(function(blog){ %>
+    <h3>
+        <a href="/blogs/<%= blog._id %>">
+            <%= blog.title %>
+        </a>
+    </h3>
+    <p>Author: <%= blog.author %></p>
+    <hr>
+<% }) %>
+</body>
+</html>
