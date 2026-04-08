@@ -1,0 +1,66 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class="container main-content article-view">
+  <article class="full-article">
+    <header class="article-header">
+      <span class="badge">Article</span>
+      <h1><%= article.title %></h1>
+      <div class="article-meta large-meta">
+        <span class="author">By <strong><%= article.author.username %></strong></span>
+        <span class="date"><%= new Date(article.createdAt).toLocaleDateString() %></span>
+        <% if (user && (user._id.toString() === article.author._id.toString() || user.role === 'admin')) { %>
+          <div class="quick-actions">
+            <a href="/articles/<%= article._id %>/edit" class="btn-outline btn-sm">Edit</a>
+            <form action="/articles/<%= article._id %>/delete" method="POST" class="inline-form">
+              <button type="submit" class="btn-danger btn-sm">Delete</button>
+            </form>
+          </div>
+        <% } %>
+      </div>
+    </header>
+    
+    <div class="article-body">
+      <% article.content.split('\n').forEach(paragraph => { %>
+        <p><%= paragraph %></p>
+      <% }) %>
+    </div>
+  </article>
+
+  <section class="comments-section">
+    <div class="comments-header">
+      <h3>Comments (<%= article.comments.length %>)</h3>
+    </div>
+
+    <div class="comments-list">
+      <% article.comments.forEach(comment => { %>
+        <div class="comment">
+          <div class="comment-author">
+            <div class="avatar"><%= comment.author.username.charAt(0).toUpperCase() %></div>
+            <strong><%= comment.author.username %></strong>
+            <span class="date"><%= new Date(comment.createdAt).toLocaleDateString() %></span>
+          </div>
+          <p class="comment-content"><%= comment.content %></p>
+        </div>
+      <% }) %>
+    </div>
+
+    <% if (user) { %>
+      <div class="comment-form-container">
+        <h4>Leave a comment</h4>
+        <form action="/articles/<%= article._id %>/comments" method="POST">
+          <div class="form-group">
+            <textarea name="content" rows="3" required placeholder="What are your thoughts?"></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Post Comment</button>
+        </form>
+      </div>
+    <% } else { %>
+      <div class="login-prompt">
+        <p>You must be <a href="/login">logged in</a> to leave a comment.</p>
+      </div>
+    <% } %>
+  </section>
+</div>
+
+<%- include('partials/footer') %>

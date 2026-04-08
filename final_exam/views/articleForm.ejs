@@ -1,0 +1,24 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class="container main-content">
+  <div class="form-wrapper">
+    <header class="section-header">
+      <h1><%= typeof article !== 'undefined' ? 'Edit Article' : 'Create Article' %></h1>
+    </header>
+    
+    <form action="<%= typeof article !== 'undefined' ? '/articles/' + article._id + '/edit' : '/articles/create' %>" method="POST" class="styled-form">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" required value="<%= typeof article !== 'undefined' ? article.title : '' %>" placeholder="Enter an engaging title" />
+      </div>
+      <div class="form-group">
+        <label for="content">Content</label>
+        <textarea id="content" name="content" rows="10" required placeholder="Write your amazing story here..."><%= typeof article !== 'undefined' ? article.content : '' %></textarea>
+      </div>
+      <button type="submit" class="btn-primary full-width"><%= typeof article !== 'undefined' ? 'Update Article' : 'Publish Article' %></button>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

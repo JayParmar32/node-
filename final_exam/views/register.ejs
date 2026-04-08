@@ -1,0 +1,30 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class="containerauth">
+  <div class="auth-card">
+    <h2>Create an Account</h2>
+    <p>Join the best blog community.</p>
+    <form action="/register" method="POST">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <div class="form-group">
+        <label for="role">Role</label>
+        <select name="role" id="role">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary full-width">Register</button>
+    </form>
+    <p class="auth-link">Already have an account? <a href="/login">Login</a></p>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

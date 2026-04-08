@@ -1,0 +1,42 @@
+<%- include('partials/head') %>
+<%- include('partials/navbar') %>
+
+<div class="container main-content">
+  <header class="section-header flex-header">
+    <div>
+      <h1>My Articles</h1>
+      <p>Manage your written content.</p>
+    </div>
+    <a href="/articles/create" class="btn-primary">Write New Article</a>
+  </header>
+
+  <div class="articles-grid">
+    <% if (articles && articles.length > 0) { %>
+      <% articles.forEach(article => { %>
+        <div class="article-card">
+          <div class="article-content">
+            <h3><a href="/articles/<%= article._id %>"><%= article.title %></a></h3>
+            <p class="excerpt"><%= article.content.substring(0, 100) %>...</p>
+          </div>
+          <div class="article-actions-footer">
+            <div class="article-meta">
+              <span class="date"><%= new Date(article.createdAt).toLocaleDateString() %></span>
+            </div>
+            <div class="actions">
+              <a href="/articles/<%= article._id %>/edit" class="btn-outline btn-sm">Edit</a>
+              <form action="/articles/<%= article._id %>/delete" method="POST" class="inline-form">
+                <button type="submit" class="btn-danger btn-sm">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div class="empty-state">
+        <p>You haven't written any articles yet. <a href="/articles/create">Start writing!</a></p>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

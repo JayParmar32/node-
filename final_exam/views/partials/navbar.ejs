@@ -1,0 +1,16 @@
+<nav class="navbar">
+  <div class="nav-brand">
+    <a href="/">✨ LuxeBlog</a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="/">All Articles</a></li>
+    <% if (user) { %>
+      <li><a href="/articles/my-articles">My Articles</a></li>
+      <li><a href="/articles/create" class="btn-primary">Write</a></li>
+      <li><a href="/logout" class="btn-outline">Logout (<%= user.username %>)</a></li>
+    <% } else { %>
+      <li><a href="/login" class="btn-outline">Login</a></li>
+      <li><a href="/register" class="btn-primary">Sign Up</a></li>
+    <% } %>
+  </ul>
+</nav>
