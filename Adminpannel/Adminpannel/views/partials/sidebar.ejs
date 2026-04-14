@@ -1,0 +1,24 @@
+<aside class="sidebar">
+    <div class="brand">
+        <i class="fa-solid fa-notes-medical"></i> HMS Admin
+    </div>
+    <nav>
+        <a href="/dashboard" class="nav-link <%= title === 'Admin Dashboard' ? 'active' : '' %>">
+            <i class="fa-solid fa-chart-line"></i> Dashboard
+        </a>
+        <a href="/doctors" class="nav-link <%= title.includes('Doctor') ? 'active' : '' %>">
+            <i class="fa-solid fa-user-doctor"></i> Doctors
+        </a>
+        <a href="/patients" class="nav-link <%= title.includes('Patient') ? 'active' : '' %>">
+            <i class="fa-solid fa-users"></i> Patients
+        </a>
+        <a href="/appointments" class="nav-link <%= title.includes('Appointment') ? 'active' : '' %>">
+            <i class="fa-solid fa-calendar-check"></i> Appointments
+        </a>
+        <div style="margin-top: 2rem;">
+            <a href="/auth/logout" class="nav-link" style="color: var(--danger);">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </a>
+        </div>
+    </nav>
+</aside>

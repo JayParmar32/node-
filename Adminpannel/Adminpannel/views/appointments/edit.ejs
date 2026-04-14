@@ -1,0 +1,63 @@
+<%- include('../partials/header') %>
+<div class="app-container">
+    <%- include('../partials/sidebar') %>
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Edit Appointment</h1>
+            <a href="/appointments" class="btn" style="background: var(--border); color: var(--text-primary);">Back to List</a>
+        </div>
+        <div class="glass form-container">
+            <form action="/appointments/edit/<%= appointment._id %>?_method=PUT" method="POST">
+                <div class="input-group">
+                    <label>Select Patient</label>
+                    <select name="patient" required>
+                        <% patients.forEach(patient => { %>
+                            <option value="<%= patient._id %>" <%= appointment.patient.toString() === patient._id.toString() ? 'selected' : '' %>>
+                                <%= patient.name %>
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Select Doctor</label>
+                    <select name="doctor" required>
+                        <% doctors.forEach(doc => { %>
+                            <option value="<%= doc._id %>" <%= appointment.doctor.toString() === doc._id.toString() ? 'selected' : '' %>>
+                                <%= doc.name %> (<%= doc.specialization %>)
+                            </option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="input-group">
+                        <label>Date</label>
+                        <% 
+                            const dateObj = new Date(appointment.date);
+                            const formattedDate = dateObj.toISOString().split('T')[0];
+                        %>
+                        <input type="date" name="date" required value="<%= formattedDate %>">
+                    </div>
+                    <div class="input-group">
+                        <label>Time</label>
+                        <input type="time" name="time" required value="<%= appointment.time %>">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Reason for Visit</label>
+                    <textarea name="reason" rows="3" required><%= appointment.reason %></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Status</label>
+                    <select name="status">
+                        <option value="Pending" <%= appointment.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+                        <option value="Confirmed" <%= appointment.status === 'Confirmed' ? 'selected' : '' %>>Confirmed</option>
+                        <option value="Completed" <%= appointment.status === 'Completed' ? 'selected' : '' %>>Completed</option>
+                        <option value="Cancelled" <%= appointment.status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Update Appointment</button>
+            </form>
+        </div>
+    </main>
+</div>
+<%- include('../partials/footer') %>

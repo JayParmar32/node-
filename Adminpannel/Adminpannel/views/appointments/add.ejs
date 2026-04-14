@@ -1,0 +1,58 @@
+<%- include('../partials/header') %>
+<div class="app-container">
+    <%- include('../partials/sidebar') %>
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Schedule Appointment</h1>
+            <a href="/appointments" class="btn" style="background: var(--border); color: var(--text-primary);">Back to List</a>
+        </div>
+        <div class="glass form-container">
+            <% if (locals.error) { %>
+                <div style="color: var(--danger); margin-bottom: 1rem;"><%= error %></div>
+            <% } %>
+            <form action="/appointments/add" method="POST">
+                <div class="input-group">
+                    <label>Select Patient</label>
+                    <select name="patient" required>
+                        <% patients.forEach(patient => { %>
+                            <option value="<%= patient._id %>"><%= patient.name %> (Contact: <%= patient.contact %>)</option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Select Doctor</label>
+                    <select name="doctor" required>
+                        <% doctors.forEach(doc => { %>
+                            <option value="<%= doc._id %>"><%= doc.name %> (<%= doc.specialization %>)</option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="input-group">
+                        <label>Date</label>
+                        <input type="date" name="date" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Time</label>
+                        <input type="time" name="time" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Reason for Visit</label>
+                    <textarea name="reason" rows="3" required placeholder="Briefly describe the symptoms or reason for the visit..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Status</label>
+                    <select name="status">
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Schedule Appointment</button>
+            </form>
+        </div>
+    </main>
+</div>
+<%- include('../partials/footer') %>

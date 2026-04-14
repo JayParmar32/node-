@@ -1,0 +1,33 @@
+<%- include('partials/header') %>
+
+<div class="login-container">
+    <div class="login-overlay"></div>
+    <div class="login-card glass">
+        <h2><i class="fa-solid fa-notes-medical" style="color: var(--secondary)"></i> Admin panel</h2>
+        <% if (locals.error) { %>
+            <div style="background: rgba(239, 68, 68, 0.2); color: #fecaca; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid rgba(239, 68, 68, 0.4);">
+                <%= error %>
+            </div>
+        <% } %>
+        <form action="/auth/login" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="form-control" required placeholder="Enter admin username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required placeholder="Enter your password">
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Sign In to Dashboard</button>
+            <div style="margin-top: 1.5rem; text-align: center; color: #cbd5e1; font-size: 0.875rem;">
+                <p>Demo Credentials:</p>
+                <div style="background: rgba(0, 0, 0, 0.2); padding: 0.5rem; border-radius: 6px; margin-top: 0.5rem; display: inline-block;">
+                    Username: <strong style="color: white; user-select: all;">admin</strong> <br>
+                    Password: <strong style="color: white; user-select: all;">admin123</strong>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

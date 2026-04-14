@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+<div class="app-container">
+    <%- include('../partials/sidebar') %>
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">Add New Doctor</h1>
+            <a href="/doctors" class="btn" style="background: var(--border); color: var(--text-primary);">Back to List</a>
+        </div>
+        <div class="glass form-container">
+            <% if (locals.error) { %>
+                <div style="color: var(--danger); margin-bottom: 1rem;"><%= error %></div>
+            <% } %>
+            <form action="/doctors/add" method="POST">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" required placeholder="Dr. John Doe">
+                </div>
+                <div class="input-group">
+                    <label>Specialization</label>
+                    <input type="text" name="specialization" required placeholder="e.g. Cardiologist">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" required placeholder="doctor@hospital.com">
+                    </div>
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input type="text" name="phone" required placeholder="+1 234 567 8900">
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="input-group">
+                        <label>Experience (Years)</label>
+                        <input type="number" name="experience" min="0" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Status</label>
+                        <select name="status">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Save Doctor Profile</button>
+            </form>
+        </div>
+    </main>
+</div>
+<%- include('../partials/footer') %>
