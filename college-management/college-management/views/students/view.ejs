@@ -1,0 +1,100 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Student Profile</h1>
+    <p class="page-sub">Enrollment: <code><%= student.enrollmentNo %></code></p>
+  </div>
+  <div class="header-actions">
+    <a href="/students/<%= student._id %>/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+    <a href="/students" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+  </div>
+</div>
+
+<div class="profile-layout">
+  <div class="profile-sidebar">
+    <div class="profile-card">
+      <div class="profile-avatar"><%= student.name.charAt(0).toUpperCase() %></div>
+      <h2 class="profile-name"><%= student.name %></h2>
+      <p class="profile-id"><%= student.enrollmentNo %></p>
+      <span class="badge badge-<%= student.status === 'Active' ? 'green' : student.status === 'Graduated' ? 'purple' : 'gray' %> badge-lg">
+        <%= student.status %>
+      </span>
+      <div class="profile-meta">
+        <div class="meta-item"><i class="fas fa-envelope"></i> <%= student.email %></div>
+        <div class="meta-item"><i class="fas fa-phone"></i> <%= student.phone %></div>
+        <div class="meta-item"><i class="fas fa-venus-mars"></i> <%= student.gender %></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-main">
+    <div class="detail-card">
+      <h3 class="detail-title"><i class="fas fa-user"></i> Personal Details</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Full Name</span>
+          <span class="detail-value"><%= student.name %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Date of Birth</span>
+          <span class="detail-value"><%= student.dob ? new Date(student.dob).toLocaleDateString('en-IN') : '—' %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Gender</span>
+          <span class="detail-value"><%= student.gender %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Phone</span>
+          <span class="detail-value"><%= student.phone %></span>
+        </div>
+        <div class="detail-item form-full">
+          <span class="detail-label">Address</span>
+          <span class="detail-value"><%= student.address || '—' %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <h3 class="detail-title"><i class="fas fa-graduation-cap"></i> Academic Details</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Department</span>
+          <span class="detail-value"><%= student.department ? student.department.name : '—' %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Course</span>
+          <span class="detail-value"><%= student.course ? student.course.name : '—' %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Semester</span>
+          <span class="detail-value">Semester <%= student.semester %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Year</span>
+          <span class="detail-value">Year <%= student.year %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Admission Date</span>
+          <span class="detail-value"><%= student.admissionDate ? new Date(student.admissionDate).toLocaleDateString('en-IN') : '—' %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Status</span>
+          <span class="detail-value">
+            <span class="badge badge-<%= student.status === 'Active' ? 'green' : 'gray' %>"><%= student.status %></span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="danger-zone">
+      <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+      <p>Deleting a student is permanent and cannot be undone.</p>
+      <form action="/students/<%= student._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this student? This cannot be undone.')">
+        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete Student</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

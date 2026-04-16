@@ -1,0 +1,91 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Faculty</h1>
+    <p class="page-sub">Manage teaching and administrative staff</p>
+  </div>
+  <a href="/faculty/add" class="btn btn-primary"><i class="fas fa-plus"></i> Add Faculty</a>
+</div>
+
+<div class="filter-bar">
+  <form action="/faculty" method="GET" class="filter-form">
+    <div class="search-input">
+      <i class="fas fa-search"></i>
+      <input type="text" name="search" placeholder="Search by name, ID, email..." value="<%= query.search || '' %>">
+    </div>
+    <select name="department">
+      <option value="">All Departments</option>
+      <% departments.forEach(d => { %>
+      <option value="<%= d._id %>" <%= query.department == d._id ? 'selected' : '' %>><%= d.name %></option>
+      <% }) %>
+    </select>
+    <select name="status">
+      <option value="">All Status</option>
+      <option value="Active" <%= query.status === 'Active' ? 'selected' : '' %>>Active</option>
+      <option value="Inactive" <%= query.status === 'Inactive' ? 'selected' : '' %>>Inactive</option>
+      <option value="On Leave" <%= query.status === 'On Leave' ? 'selected' : '' %>>On Leave</option>
+    </select>
+    <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i> Filter</button>
+    <a href="/faculty" class="btn btn-outline">Clear</a>
+  </form>
+</div>
+
+<div class="result-count"><%= faculty.length %> faculty member(s) found</div>
+
+<div class="table-card">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Faculty</th>
+        <th>Employee ID</th>
+        <th>Designation</th>
+        <th>Department</th>
+        <th>Qualification</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (faculty.length > 0) { %>
+        <% faculty.forEach((f, i) => { %>
+        <tr>
+          <td><%= i + 1 %></td>
+          <td>
+            <div class="name-cell">
+              <div class="avatar-sm avatar-purple"><%= f.name.charAt(0).toUpperCase() %></div>
+              <div>
+                <div class="fw-600"><%= f.name %></div>
+                <div class="text-sm text-muted"><%= f.email %></div>
+              </div>
+            </div>
+          </td>
+          <td><code><%= f.employeeId %></code></td>
+          <td><%= f.designation %></td>
+          <td><%= f.department ? f.department.name : '—' %></td>
+          <td><%= f.qualification %></td>
+          <td>
+            <span class="badge badge-<%= f.status === 'Active' ? 'green' : f.status === 'On Leave' ? 'orange' : 'gray' %>">
+              <%= f.status %>
+            </span>
+          </td>
+          <td>
+            <div class="action-btns">
+              <a href="/faculty/<%= f._id %>" class="icon-btn icon-view" title="View"><i class="fas fa-eye"></i></a>
+              <a href="/faculty/<%= f._id %>/edit" class="icon-btn icon-edit" title="Edit"><i class="fas fa-edit"></i></a>
+              <form action="/faculty/<%= f._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this faculty member?')">
+                <button type="submit" class="icon-btn icon-delete" title="Delete"><i class="fas fa-trash"></i></button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        <% }) %>
+      <% } else { %>
+        <tr><td colspan="8" class="empty-row"><i class="fas fa-user-slash"></i> No faculty found</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> | College Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% if (admin) { %>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-icon"><i class="fas fa-graduation-cap"></i></div>
+      <div class="brand-text">
+        <span class="brand-name">EduAdmin</span>
+        <span class="brand-sub">Management System</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/dashboard" class="nav-item <%= title === 'Dashboard' ? 'active' : '' %>">
+        <i class="fas fa-th-large"></i><span>Dashboard</span>
+      </a>
+      <div class="nav-section">Academic</div>
+      <a href="/students" class="nav-item <%= title.includes('Student') ? 'active' : '' %>">
+        <i class="fas fa-user-graduate"></i><span>Students</span>
+      </a>
+      <a href="/faculty" class="nav-item <%= title.includes('Faculty') ? 'active' : '' %>">
+        <i class="fas fa-chalkboard-teacher"></i><span>Faculty</span>
+      </a>
+      <div class="nav-section">Administration</div>
+      <a href="/departments" class="nav-item <%= title.includes('Department') ? 'active' : '' %>">
+        <i class="fas fa-building"></i><span>Departments</span>
+      </a>
+      <a href="/courses" class="nav-item <%= title.includes('Course') ? 'active' : '' %>">
+        <i class="fas fa-book-open"></i><span>Courses</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="admin-info">
+        <div class="admin-avatar"><%= admin.name.charAt(0).toUpperCase() %></div>
+        <div>
+          <div class="admin-name"><%= admin.name %></div>
+          <div class="admin-role">Administrator</div>
+        </div>
+      </div>
+      <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main-wrapper">
+    <header class="topbar">
+      <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+      <div class="topbar-title"><%= title %></div>
+      <div class="topbar-right">
+        <div class="admin-chip">
+          <span class="chip-dot"></span>
+          <span><%= admin.name %></span>
+        </div>
+      </div>
+    </header>
+    <main class="content-area">
+  <% } %>
+
+  <!-- Flash Messages -->
+  <% if (success_msg && success_msg.length > 0) { %>
+  <div class="alert alert-success"><i class="fas fa-check-circle"></i> <%= success_msg %></div>
+  <% } %>
+  <% if (error_msg && error_msg.length > 0) { %>
+  <div class="alert alert-error"><i class="fas fa-exclamation-circle"></i> <%= error_msg %></div>
+  <% } %>

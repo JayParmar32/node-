@@ -1,0 +1,59 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+  <div><h1 class="page-title">Add Course</h1></div>
+  <a href="/courses" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+</div>
+
+<div class="form-card form-narrow">
+  <form action="/courses/add" method="POST">
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Course Name <span class="required">*</span></label>
+        <input type="text" name="name" placeholder="e.g. B.Tech Computer Engineering" required>
+      </div>
+      <div class="form-group">
+        <label>Course Code <span class="required">*</span></label>
+        <input type="text" name="code" placeholder="e.g. BTCE" required>
+      </div>
+      <div class="form-group">
+        <label>Department <span class="required">*</span></label>
+        <select name="department" required>
+          <option value="">Select Department</option>
+          <% departments.forEach(d => { %>
+          <option value="<%= d._id %>"><%= d.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Duration (Years) <span class="required">*</span></label>
+        <input type="number" name="duration" placeholder="e.g. 4" min="1" max="6" required>
+      </div>
+      <div class="form-group">
+        <label>Total Semesters <span class="required">*</span></label>
+        <input type="number" name="totalSemesters" placeholder="e.g. 8" min="1" max="12" required>
+      </div>
+      <div class="form-group">
+        <label>Annual Fees (₹)</label>
+        <input type="number" name="fees" placeholder="e.g. 75000">
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select name="status">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="form-group form-full">
+        <label>Description</label>
+        <textarea name="description" placeholder="Brief about the course..." rows="3"></textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Course</button>
+      <a href="/courses" class="btn btn-outline">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

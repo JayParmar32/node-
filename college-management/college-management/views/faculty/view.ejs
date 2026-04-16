@@ -1,0 +1,95 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Faculty Profile</h1>
+    <p class="page-sub">Employee ID: <code><%= faculty.employeeId %></code></p>
+  </div>
+  <div class="header-actions">
+    <a href="/faculty/<%= faculty._id %>/edit" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+    <a href="/faculty" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+  </div>
+</div>
+
+<div class="profile-layout">
+  <div class="profile-sidebar">
+    <div class="profile-card">
+      <div class="profile-avatar avatar-purple-lg"><%= faculty.name.charAt(0).toUpperCase() %></div>
+      <h2 class="profile-name"><%= faculty.name %></h2>
+      <p class="profile-id"><%= faculty.designation %></p>
+      <span class="badge badge-<%= faculty.status === 'Active' ? 'green' : faculty.status === 'On Leave' ? 'orange' : 'gray' %> badge-lg">
+        <%= faculty.status %>
+      </span>
+      <div class="profile-meta">
+        <div class="meta-item"><i class="fas fa-envelope"></i> <%= faculty.email %></div>
+        <div class="meta-item"><i class="fas fa-phone"></i> <%= faculty.phone %></div>
+        <div class="meta-item"><i class="fas fa-venus-mars"></i> <%= faculty.gender %></div>
+        <% if (faculty.salary) { %>
+        <div class="meta-item"><i class="fas fa-rupee-sign"></i> ₹<%= faculty.salary.toLocaleString() %>/month</div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-main">
+    <div class="detail-card">
+      <h3 class="detail-title"><i class="fas fa-briefcase"></i> Professional Details</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Qualification</span>
+          <span class="detail-value"><%= faculty.qualification %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Designation</span>
+          <span class="detail-value"><%= faculty.designation %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Department</span>
+          <span class="detail-value"><%= faculty.department ? faculty.department.name : '—' %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Joining Date</span>
+          <span class="detail-value"><%= faculty.joiningDate ? new Date(faculty.joiningDate).toLocaleDateString('en-IN') : '—' %></span>
+        </div>
+        <% if (faculty.subjects && faculty.subjects.length > 0) { %>
+        <div class="detail-item form-full">
+          <span class="detail-label">Subjects Taught</span>
+          <span class="detail-value">
+            <% faculty.subjects.forEach(sub => { %>
+            <span class="tag"><%= sub %></span>
+            <% }) %>
+          </span>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <h3 class="detail-title"><i class="fas fa-user"></i> Personal Details</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">Date of Birth</span>
+          <span class="detail-value"><%= faculty.dob ? new Date(faculty.dob).toLocaleDateString('en-IN') : '—' %></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Gender</span>
+          <span class="detail-value"><%= faculty.gender %></span>
+        </div>
+        <div class="detail-item form-full">
+          <span class="detail-label">Address</span>
+          <span class="detail-value"><%= faculty.address || '—' %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="danger-zone">
+      <h3><i class="fas fa-exclamation-triangle"></i> Danger Zone</h3>
+      <p>Deleting a faculty member is permanent and cannot be undone.</p>
+      <form action="/faculty/<%= faculty._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Delete this faculty member?')">
+        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete Faculty</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
